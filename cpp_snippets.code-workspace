@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cSpell.words": [
+			"valgrind"
+		],
+		"files.associations": {
+			"iostream": "cpp"
+		}
+	}
+}
