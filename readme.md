@@ -5,19 +5,19 @@
 Build an image with:
 
 ```bash
-docker build -t cpp_snippets:0.0.1 .
+export CXX_SNIPPETS_VERSION=0.0.2
+docker build --build-arg CXX_SNIPPETS_VERSION=$CXX_SNIPPETS_VERSION -t cpp_snippets:$CXX_SNIPPETS_VERSION .
 ```
 
 Run container interactively and mount files with:
 
 ```bash
-docker run -itv $PWD:/home cpp_snippets:0.0.1
+docker run -itv $PWD:/home cpp_snippets:$CXX_SNIPPETS_VERSION
 ```
 
 ## Build
 
 ```bash
-cd /home
 cmake -S . -B ./build
 cmake --build ./build
 ctest --test-dir ./build/

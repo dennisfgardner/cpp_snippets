@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(MyApp VERSION 0.0.1 LANGUAGES CXX)
+project(MyApp VERSION $ENV{CXX_SNIPPETS_VERSION} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
