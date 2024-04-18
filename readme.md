@@ -5,7 +5,7 @@
 Build an image with:
 
 ```bash
-export CXX_SNIPPETS_VERSION=0.0.2
+export CXX_SNIPPETS_VERSION=0.0.3
 docker build --build-arg CXX_SNIPPETS_VERSION=$CXX_SNIPPETS_VERSION -t cpp_snippets:$CXX_SNIPPETS_VERSION .
 ```
 
@@ -21,6 +21,7 @@ docker run -itv $PWD:/home cpp_snippets:$CXX_SNIPPETS_VERSION
 cmake -S . -B ./build
 cmake --build ./build
 ctest --test-dir ./build/
+./build/bin/main
 ```
 
 ## Static Analysis
@@ -28,11 +29,11 @@ ctest --test-dir ./build/
 Cpp Check
 
 ```bash
-cppcheck --enable=all --std=c++17 --suppress=missingIncludeSystem ./src/main.cpp -I ./include/
+cppcheck --enable=all --std=c++17 --suppress=missingIncludeSystem ./src/* -I./include
 ```
 
 ```bash
-clang-tidy -p ./build -header-filter=.* ./src/main.cpp -extra-arg=-std=c++17
+clang-tidy -p ./build -header-filter=.* ./src/* -extra-arg=-std=c++17 -- -I./include
 ```
 
 ## Memory Leak Check
