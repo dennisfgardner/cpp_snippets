@@ -15,6 +15,14 @@ Run container interactively and mount files with:
 docker run -itv $PWD:/home cpp_snippets:$CXX_SNIPPETS_VERSION
 ```
 
+## Documentation
+
+Generate documentation in a ./docs directory with the following command:
+
+```bash
+doxygen Doxyfile
+```
+
 ## Build
 
 ```bash
