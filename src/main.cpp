@@ -5,7 +5,9 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <string_view>
 #include <sstream>
+#include <span>
 #include <cstdlib>
 
 #include "utilities.hpp"
@@ -14,20 +16,23 @@ auto main(int argc, char** argv) -> int
 {
     std::cout << "Main Program Started\n";
 
+    const std::string_view usage{"main <path_to_data_dir>"};
     const int required_num_args = 1;
-    const bool in_arg_check = arg_count_checker(argc, required_num_args);
+    const bool in_arg_check = argc_checker(argc, usage, required_num_args);
     if (!in_arg_check){
-        std::cerr << "USAGE: main <path_to_data_directory>" << std::endl;
         return EXIT_FAILURE;
     }
 
-    std::cout << "current working directory: " 
-        << std::filesystem::current_path() << "\n";
+    auto args = std::span(argv, argc);
+    const std::string input_data_dir{args[1]};
+    const bool dir_exists = dir_checker(input_data_dir);
+    if (!dir_exists){
+        return EXIT_FAILURE;
+    }
 
 
 
-    const std::string input_data_dir{argv[1]};
-
+    
     if (!std::filesystem::exists(input_data_dir))
     {
         std::cerr << "ERROR: input data dir " << input_data_dir 
@@ -47,7 +52,7 @@ auto main(int argc, char** argv) -> int
     std::ifstream input(filename, std::ifstream::in);
     if (!input)
     {
-        std::cerr << "ERROR: Cannot read file " << filename << std::endl;
+        std::cerr << "ERROR: Cannot read file " << filename << "\n";
     }
     std::string line_content{};
     std::size_t rows{0};
