@@ -6,18 +6,42 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+add_compile_options(
+    -Wall
+    -Wextra
+    -Wshadow
+    -Wnon-virtual-dtor
+    -Wconversion
+    -Wpedantic
+    -pedantic
+    -Wold-style-cast
+    -Wcast-align
+    -Wunused
+    -Woverloaded-virtual
+    -Wsign-conversion
+    -Wmisleading-indentation
+    -Wduplicated-cond
+    -Wduplicated-branches
+    -Wlogical-op
+    -Wnull-dereference
+    -Wuseless-cast
+    -Wdouble-promotion
+    -Wformat=2
+    -Wimplicit-fallthrough
+    -Weffc++
+    -Werror
+)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # utilities
 add_library(utilities ./src/utilities.cpp)
-target_compile_options(utilities PRIVATE -Wall -Wextra -Wshadow -Wconversion -Wpedantic -Werror)
 target_include_directories(utilities PRIVATE ./include)
 
 # main
 add_executable(main ./src/main.cpp)
-target_compile_options(main PRIVATE -Wall -Wextra -Wshadow -Wconversion -Wpedantic -Werror)
 target_include_directories(main PRIVATE ./include)
 target_link_libraries(main utilities)
 

@@ -7,7 +7,6 @@
 #include <string>
 #include <string_view>
 #include <sstream>
-#include <span>
 #include <cstdlib>
 
 #include "utilities.hpp"
@@ -23,8 +22,7 @@ auto main(int argc, char** argv) -> int
         return EXIT_FAILURE;
     }
 
-    auto args = std::span(argv, argc);
-    const std::string input_data_dir{args[1]};
+    const std::string input_data_dir{argv[1]};
     const bool dir_exists = dir_checker(input_data_dir);
     if (!dir_exists){
         return EXIT_FAILURE;
