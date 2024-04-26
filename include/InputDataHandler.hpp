@@ -27,11 +27,11 @@ public:
      *
      * Calling the constructor will iterate through all the filenames in the
      * directory and parse the filenames to extract the data collection
-     * information. 
+     * information and process the diffraction pattern. 
      *
-     * \param data_directory path to directory containing data files
+     * \param data_directory path to directory containing data files must end with "/"
      */
-    explicit InputDataHandler(const std::string &data_directory) : data_dir{data_directory} {};
+    explicit InputDataHandler(const std::string &data_directory);
 
 
     /**
@@ -44,22 +44,33 @@ public:
     [[nodiscard]] auto get_diffraction_pattern() -> cv::Mat;
 
 
-
     /**
-     * \brief data filenames
+     * \brief get data filenames
      * \return data filenames
      */
-    [[nodiscard]] auto get_filenames() -> std::vector<std::string> {return filenames;};
+    [[nodiscard]] auto get_filenames() const -> std::set<std::string> {return filenames;};
 
 
+    /**
+     * \brief get number of rows
+     * \return number of rows
+     */
+    [[nodiscard]] auto get_num_rows() const -> int{return rows_cols.first;};
 
 
+    /**
+     * \brief get number of columns
+     * \return number of columns
+     */
+    [[nodiscard]] auto get_num_cols() const -> int {return rows_cols.second;};
 
 
 private:
-    std::string data_dir{};
-    const std::string data_file_extension{".csv"};
-    std::vector<std::string> filenames{};
+    const std::string data_dir{};
+    const std::string data_file_extension{};
+    std::set<std::string> filenames{};
+    std::pair<int, int> rows_cols{0, 0};
+    const int opencv_datatype{};
     struct filename_info
     {
         std::string prefix{};

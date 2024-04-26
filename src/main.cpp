@@ -27,19 +27,25 @@ auto main(int argc, char** argv) -> int
         return EXIT_FAILURE;
     }
 
-    std::set<std::string> filenames = get_dir_filenames(input_data_dir, ".csv");
+    
+    InputDataHandler input_data_handler(input_data_dir);
+    const auto filenames = input_data_handler.get_filenames();
     std::cout << "filenames:\n";
     for (const auto& filename : filenames)
     {
         std::cout << filename << "\n";
     }
+    const int rows = input_data_handler.get_num_rows();
+    const int cols = input_data_handler.get_num_cols();
+    std::cout << "the data files have:\n"; 
+    std::cout << "\t" << rows << " rows and\n";
+    std::cout << "\t" << cols << " cols.\n";
 
-    std::string single_file = *filenames.begin();
-    std::pair<size_t, size_t> rows_cols = get_csv_rows_and_cols(input_data_dir + single_file);
 
-    std::cout << "there are " << rows_cols.first << " rows in this file\n";
-    std::cout << "there are " << rows_cols.second << " cols in this file\n";
-
+    cv::Mat diffraction_pattern = input_data_handler.get_diffraction_pattern();
+    std::cout << "the matrix has a size (width x height) of:\n"; 
+    std::cout << "\t" << diffraction_pattern.size() << "\n";
+    
     std::cout << "Program Finished.\n";
     return 0;
 }

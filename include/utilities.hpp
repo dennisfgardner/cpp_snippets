@@ -66,6 +66,6 @@ auto get_dir_filenames(
  *
  * @return filenames in the directory with specified directory
  */
-auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<size_t, size_t>;
+auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<int, int>;
 
 #endif

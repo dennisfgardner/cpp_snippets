@@ -61,9 +61,9 @@ auto get_dir_filenames(
 }
 
 
-auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<size_t, size_t>
+auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<int, int>
 {
-    std::pair<size_t, size_t> retval{0, 0};
+    std::pair<int, int> retval{0, 0};
     
     std::ifstream input(csv_file, std::ifstream::in);
     if (!input)
@@ -71,14 +71,14 @@ auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<size_t, siz
         std::cerr << "ERROR: Cannot read csv file " << csv_file << "\n";
     } else {
         std::string line_content{};
-        std::size_t rows{0};
+        int rows{0};
         while (input >> line_content)
         {
             ++rows;
         }
         std::stringstream line(line_content);
         std::string col_content{};
-        std::size_t cols{0};
+        int cols{0};
         while (std::getline(line, col_content, ','))
         {
             ++cols;

@@ -5,7 +5,7 @@
 #include <utility>
 
 #include <catch2/catch.hpp>
-#include <opencv2/core.hpp>
+#include <opencv2/opencv.hpp>
 
 #include "utilities.hpp"
 #include "InputDataHandler.hpp"
@@ -53,10 +53,10 @@ TEST_CASE("get directory filenames", "[utilities]" )
 TEST_CASE("get csv rows and cols", "[utilities]" )
 {
     const std::string no_file{"./test/data/no_file_here_dljksfkh.csv"};
-    REQUIRE(get_csv_rows_and_cols(no_file) == std::pair<size_t, size_t>(0, 0));
-    const size_t rows = 1280;
-    const size_t cols = 1024;
-    const std::pair<size_t, size_t> rows_cols{rows, cols};
+    REQUIRE(get_csv_rows_and_cols(no_file) == std::pair<int, int>(0, 0));
+    const int rows = 1280;
+    const int cols = 1024;
+    const std::pair<int, int> rows_cols{rows, cols};
     const std::string csv_file{"../test/data/bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0000.csv"};
     REQUIRE(get_csv_rows_and_cols(csv_file) == rows_cols) ;
     REQUIRE(get_csv_rows_and_cols("../test/data/bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0001.csv") == rows_cols) ;
@@ -87,12 +87,16 @@ TEST_CASE( "input data handler", "[InputDataHandler]" ) {
 
     SECTION( "1280 x 1024 size with test/data directory path" )
     {
-        InputDataHandler input_data_handler("../test/data");
+        InputDataHandler input_data_handler("../test/data/");
         const cv::Mat diffraction_pattern = input_data_handler.get_diffraction_pattern();
         const int rows{1280};
         const int cols{1024};
-        const cv::Size test_data_mat(rows, cols);
+        // I think of matrices as rows x cols
+        // but opencv size is cols (width) x rows (height)
+        const cv::Size test_data_mat(cols, rows);
         REQUIRE(diffraction_pattern.size() == test_data_mat);
+        REQUIRE(diffraction_pattern.rows == rows);
+        REQUIRE(diffraction_pattern.cols == cols);
     }
 
 
