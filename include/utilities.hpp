@@ -2,7 +2,7 @@
 #define UTILITIES_CPP_SNIPPETS_HEADER
 
 #include <string>
-#include <vector>
+#include <set>
 
 
 /** @fn
@@ -52,6 +52,6 @@ auto dir_checker(
 auto get_dir_filenames(
     std::string_view dir_path,
     std::string_view ext
-) -> std::vector<std::string>;
+) -> std::set<std::string>;
 
 #endif

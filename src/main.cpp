@@ -8,6 +8,7 @@
 #include <string_view>
 #include <sstream>
 #include <cstdlib>
+#include <set>
 
 #include "utilities.hpp"
 
@@ -28,7 +29,7 @@ auto main(int argc, char** argv) -> int
         return EXIT_FAILURE;
     }
 
-    const std::vector<std::string> filenames = get_dir_filenames(input_data_dir, ".csv");
+    const std::set<std::string> filenames = get_dir_filenames(input_data_dir, ".csv");
     std::cout << "directory contents:\n";
     for (const auto& filename : filenames)
     {

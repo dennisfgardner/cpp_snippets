@@ -2,7 +2,7 @@
 
 #include <string_view>
 #include <string>
-#include <vector>
+#include <set>
 
 #include <filesystem>
 
@@ -40,17 +40,12 @@ TEST_CASE( "directory checker", "[utilities]" )
 TEST_CASE( "get directory filenames", "[utilities]" )
 {
 
-    const std::vector<std::string> filelist{
+    const std::set<std::string> filelist{
         "bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0000.csv",
         "bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0001.csv"
     };
-
-    // TEMP DEBUG
-    auto cur_path = std::filesystem::current_path();
-    std::cerr << "current path: " << cur_path << std::endl;
-
     REQUIRE(get_dir_filenames("../test/data", ".csv") == filelist);
-    const std::vector<std::string> no_files{};
+    const std::set<std::string> no_files{};
     REQUIRE(get_dir_filenames("../test/data", ".foo") == no_files);
     REQUIRE(get_dir_filenames("../koije/jcid", ".bar") == no_files);
 
