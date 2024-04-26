@@ -44,9 +44,9 @@ add_library(utilities ./src/utilities.cpp)
 target_include_directories(utilities PRIVATE ./include)
 
 # main
-add_executable(main ./src/main.cpp)
-target_include_directories(main PRIVATE ./include)
-target_link_libraries(main utilities)
+add_executable(main ./src/main.cpp ./src/InputDataHandler.cpp)
+target_include_directories(main PRIVATE ./include ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(main utilities ${OpenCV_LIBS})
 
 # unit testing
 find_package(Catch2 REQUIRED)

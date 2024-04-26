@@ -37,11 +37,11 @@ ctest --output-on-failure --test-dir ./build/
 Cpp Check
 
 ```bash
-cppcheck --enable=all --std=c++20 --suppress=missingIncludeSystem ./src/* -I./include
+cppcheck --enable=all --std=c++20 --suppress=missingIncludeSystem ./src/* ./test/test.cpp -I./include
 ```
 
 ```bash
-clang-tidy -p ./build -header-filter=.* ./src/* -extra-arg=-std=c++20 -- -I./include
+clang-tidy -p ./build -header-filter=.* ./src/* ./test/test.cpp -extra-arg=-std=c++20 -- -I./include
 ```
 
 ## Memory Leak Check

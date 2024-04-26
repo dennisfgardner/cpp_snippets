@@ -1,10 +1,8 @@
 #define CATCH_CONFIG_MAIN
 
-#include <string_view>
 #include <string>
 #include <set>
-
-#include <filesystem>
+#include <utility>
 
 #include <catch2/catch.hpp>
 #include <opencv2/core.hpp>
@@ -12,7 +10,8 @@
 #include "utilities.hpp"
 #include "InputDataHandler.hpp"
 
-TEST_CASE( "argument count checker", "[utilities]" )
+
+TEST_CASE("argument count checker", "[utilities]" )
 {
     const std::string usage{"test test test"};
     REQUIRE(argc_checker(1, usage, 0) == true);
@@ -23,21 +22,21 @@ TEST_CASE( "argument count checker", "[utilities]" )
     REQUIRE(argc_checker(2, usage, 0) == false);
 }
 
-TEST_CASE( "directory checker", "[utilities]" )
+TEST_CASE("directory checker", "[utilities]" )
 {
     REQUIRE(dir_checker("../test/") == true);
-    const std::string_view src{"../src/"};
+    const std::string src{"../src/"};
     REQUIRE(dir_checker(src) == true);
     const std::string hdr{"../include"};
     REQUIRE(dir_checker(hdr) == true);
     REQUIRE(dir_checker("/foobar_98930") == false);
-    const std::string_view foo{"./ijdhdofi/"};
+    const std::string foo{"./ijdhdofi/"};
     REQUIRE(dir_checker(foo) == false);
     const std::string bar{"jkjdf/dfj/dor"};
     REQUIRE(dir_checker(bar) == false);
 }
 
-TEST_CASE( "get directory filenames", "[utilities]" )
+TEST_CASE("get directory filenames", "[utilities]" )
 {
 
     const std::set<std::string> filelist{
@@ -48,6 +47,19 @@ TEST_CASE( "get directory filenames", "[utilities]" )
     const std::set<std::string> no_files{};
     REQUIRE(get_dir_filenames("../test/data", ".foo") == no_files);
     REQUIRE(get_dir_filenames("../koije/jcid", ".bar") == no_files);
+
+}
+
+TEST_CASE("get csv rows and cols", "[utilities]" )
+{
+    const std::string no_file{"./test/data/no_file_here_dljksfkh.csv"};
+    REQUIRE(get_csv_rows_and_cols(no_file) == std::pair<size_t, size_t>(0, 0));
+    const size_t rows = 1280;
+    const size_t cols = 1024;
+    const std::pair<size_t, size_t> rows_cols{rows, cols};
+    const std::string csv_file{"../test/data/bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0000.csv"};
+    REQUIRE(get_csv_rows_and_cols(csv_file) == rows_cols) ;
+    REQUIRE(get_csv_rows_and_cols("../test/data/bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0001.csv") == rows_cols) ;
 
 }
 

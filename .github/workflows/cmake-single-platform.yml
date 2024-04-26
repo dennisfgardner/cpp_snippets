@@ -21,7 +21,7 @@ jobs:
       # run: sudo apt -y upgrade
     - name: install packages
       run: sudo apt install -y g++ make cmake catch2 libopencv-dev
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Configure CMake
       working-directory: ${{github.workspace}}

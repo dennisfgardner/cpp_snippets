@@ -2,6 +2,7 @@
 #define UTILITIES_CPP_SNIPPETS_HEADER
 
 #include <string>
+#include <utility>
 #include <set>
 
 
@@ -20,7 +21,7 @@
  */
 auto argc_checker(
     int argc,
-    std::string_view usage,
+    const std::string &usage,
     int req_num_args
 ) -> bool;
 
@@ -33,7 +34,7 @@ auto argc_checker(
  * @return true if directory exists else false.
  */
 auto dir_checker(
-    std::string_view dir_path
+    const std::string &dir_path
 ) -> bool;
 
 
@@ -50,8 +51,21 @@ auto dir_checker(
  * @return filenames in the directory with specified directory
  */
 auto get_dir_filenames(
-    std::string_view dir_path,
-    std::string_view ext
+    const std::string &dir_path,
+    const std::string &ext
 ) -> std::set<std::string>;
+
+
+/** @fn
+ * @brief Get CSV number of rows and cols
+ * 
+ * Get comma separated values (csv) file's number of rows and columns.
+ * 
+ * @param dir_path directory path
+ * @param ext file extension with the preceding period
+ *
+ * @return filenames in the directory with specified directory
+ */
+auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<size_t, size_t>;
 
 #endif

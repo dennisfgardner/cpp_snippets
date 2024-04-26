@@ -1,12 +1,13 @@
 #include <iostream>
 #include <filesystem>
-#include <string_view>
+#include <fstream>
+#include <sstream>
 
 #include "utilities.hpp"
 
 auto argc_checker(
     const int argc,
-    const std::string_view usage,
+    const std::string &usage,
     const int req_num_args
 ) -> bool
 {
@@ -18,7 +19,7 @@ auto argc_checker(
     if (argc != total_arg_count)
     {
         retval = false;
-        const std::string_view plural{req_num_args > 1 ? "s" : ""};
+        const std::string plural{req_num_args > 1 ? "s" : ""};
         std::cerr << "ERROR: " << req_num_args << " input argument" << plural
             << " required\n"
             << "USAGE: " << usage << "\n";
@@ -26,7 +27,7 @@ auto argc_checker(
     return retval;
 }
 
-auto dir_checker(const std::string_view dir_path) -> bool
+auto dir_checker(const std::string &dir_path) -> bool
 {
     const bool retval{std::filesystem::is_directory(dir_path)};
     if (!retval)
@@ -38,23 +39,52 @@ auto dir_checker(const std::string_view dir_path) -> bool
 }
 
 auto get_dir_filenames(
-    const std::string_view dir_path,
-    const std::string_view ext
+    const std::string &dir_path,
+    const std::string &ext
 ) -> std::set<std::string>
 {
     std::set<std::string> filenames;
     if (std::filesystem::is_directory(dir_path))
     {
-        for (const auto &el : std::filesystem::directory_iterator(dir_path))
+        for (const auto &element : std::filesystem::directory_iterator(dir_path))
         {
-            if (el.is_regular_file())
+            if (element.is_regular_file())
             {
-                if (el.path().extension() == ext)
+                if (element.path().extension() == ext)
                 {
-                    filenames.insert(el.path().filename().string());
+                    filenames.insert(element.path().filename().string());
                 }
             }
         }
     }
     return filenames;
+}
+
+
+auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<size_t, size_t>
+{
+    std::pair<size_t, size_t> retval{0, 0};
+    
+    std::ifstream input(csv_file, std::ifstream::in);
+    if (!input)
+    {
+        std::cerr << "ERROR: Cannot read csv file " << csv_file << "\n";
+    } else {
+        std::string line_content{};
+        std::size_t rows{0};
+        while (input >> line_content)
+        {
+            ++rows;
+        }
+        std::stringstream line(line_content);
+        std::string col_content{};
+        std::size_t cols{0};
+        while (std::getline(line, col_content, ','))
+        {
+            ++cols;
+        }
+        retval.first = rows;
+        retval.second = cols;
+    }
+    return retval;
 }

@@ -3,8 +3,12 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 #include <opencv2/opencv.hpp>
+
+
+#include "utilities.hpp"
 
 
 /** \class InputDataHandler
@@ -16,6 +20,7 @@
  */
 class InputDataHandler
 {
+
 public:
     /**
      * \brief InputDataHandler Constructor.
@@ -26,7 +31,7 @@ public:
      *
      * \param data_directory path to directory containing data files
      */
-    explicit InputDataHandler(const std::string &data_directory) : dir{data_directory} {};
+    explicit InputDataHandler(const std::string &data_directory) : data_dir{data_directory} {};
 
 
     /**
@@ -38,8 +43,23 @@ public:
      */
     [[nodiscard]] auto get_diffraction_pattern() -> cv::Mat;
 
+
+
+    /**
+     * \brief data filenames
+     * \return data filenames
+     */
+    [[nodiscard]] auto get_filenames() -> std::vector<std::string> {return filenames;};
+
+
+
+
+
+
 private:
-    std::string dir{};
+    std::string data_dir{};
+    const std::string data_file_extension{".csv"};
+    std::vector<std::string> filenames{};
     struct filename_info
     {
         std::string prefix{};
