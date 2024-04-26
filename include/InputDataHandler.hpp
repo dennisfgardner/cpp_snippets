@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+#include <opencv2/opencv.hpp>
+
+
 /** \class InputDataHandler
  * \brief Input Data Handler
  *
@@ -24,6 +27,16 @@ public:
      * \param data_directory path to directory containing data files
      */
     explicit InputDataHandler(const std::string &data_directory) : dir{data_directory} {};
+
+
+    /**
+     * \brief Get Diffraction Pattern
+     *
+     * Return the background subtracted, high-dynamic range, diffraction pattern. 
+     *
+     * \return diffraction pattern
+     */
+    [[nodiscard]] auto get_diffraction_pattern() -> cv::Mat;
 
 private:
     std::string dir{};

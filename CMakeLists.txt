@@ -36,6 +36,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
+# external software
+find_package( OpenCV REQUIRED )
+
 # utilities
 add_library(utilities ./src/utilities.cpp)
 target_include_directories(utilities PRIVATE ./include)
@@ -47,10 +50,10 @@ target_link_libraries(main utilities)
 
 # unit testing
 find_package(Catch2 REQUIRED)
-add_executable(unit_tests ./test/test.cpp ./src/main.cpp)
+add_executable(unit_tests ./test/test.cpp ./src/main.cpp ./src/InputDataHandler.cpp)
 target_compile_definitions(unit_tests PRIVATE UNIT_TESTING)
-target_include_directories(unit_tests PRIVATE ./include)
-target_link_libraries(unit_tests Catch2::Catch2 utilities)
+target_include_directories(unit_tests PRIVATE ./include ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(unit_tests Catch2::Catch2 utilities ${OpenCV_LIBS})
 include(CTest)
 include(Catch)
 catch_discover_tests(unit_tests)

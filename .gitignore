@@ -1,3 +1,5 @@
 **/build
-test/data
 docs/
+test/data/*
+!/test/data/bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0000.csv
+!/test/data/bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0001.csv

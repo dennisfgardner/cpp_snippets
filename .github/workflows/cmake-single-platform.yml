@@ -23,7 +23,7 @@ jobs:
     - name: update and upgrade packages
       run: apk update && apk upgrade
     - name: install packages
-      run: apk add g++ make cmake ccache clang catch2 opencv
+      run: apk add g++ make cmake catch2 opencv-dev
     - uses: actions/checkout@v3
 
     - name: Configure CMake

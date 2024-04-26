@@ -36,3 +36,25 @@ auto dir_checker(const std::string_view dir_path) -> bool
     return retval;
 
 }
+
+auto get_dir_filenames(
+    const std::string_view dir_path,
+    const std::string_view ext
+) -> std::vector<std::string>
+{
+    std::vector<std::string> filenames;
+    if (std::filesystem::is_directory(dir_path))
+    {
+        for (const auto &el : std::filesystem::directory_iterator(dir_path))
+        {
+            if (el.is_regular_file())
+            {
+                if (el.path().extension() == ext)
+                {
+                    filenames.push_back(el.path().filename().string());
+                }
+            }
+        }
+    }
+    return filenames;
+}

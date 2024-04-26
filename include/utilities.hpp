@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 
-/*! @fn argc_checker
+
+/** @fn
  * @brief check number of input arguments
  *
  * Make sure the number of input args is correct. The required number of
@@ -23,7 +24,8 @@ auto argc_checker(
     int req_num_args
 ) -> bool;
 
-/*! @fn dir_checker
+
+/** @fn
  * @brief check if directory exists
  * 
  * @param dir_path directory path
@@ -33,5 +35,23 @@ auto argc_checker(
 auto dir_checker(
     std::string_view dir_path
 ) -> bool;
+
+
+/** @fn
+ * @brief Get filenames with extension
+ * 
+ * Get all the filenames in the directory, excluding subdirectories,
+ * with the given extension (include the period). For example, if looking for
+ * comma separated values (csv) files, then ext=".csv".
+ * 
+ * @param dir_path directory path
+ * @param ext file extension with the preceding period
+ *
+ * @return filenames in the directory with specified directory
+ */
+auto get_dir_filenames(
+    std::string_view dir_path,
+    std::string_view ext
+) -> std::vector<std::string>;
 
 #endif

@@ -22,27 +22,17 @@ auto main(int argc, char** argv) -> int
         return EXIT_FAILURE;
     }
 
-    const std::string input_data_dir{argv[1]};
+    const std::string_view input_data_dir{argv[1]};
     const bool dir_exists = dir_checker(input_data_dir);
     if (!dir_exists){
         return EXIT_FAILURE;
     }
 
-
-
-    
-    if (!std::filesystem::exists(input_data_dir))
-    {
-        std::cerr << "ERROR: input data dir " << input_data_dir 
-            << " does not exist\n";
-        return EXIT_FAILURE;
-    }
-
-    auto dir_iter = std::filesystem::directory_iterator(input_data_dir);
+    const std::vector<std::string> filenames = get_dir_filenames(input_data_dir, ".csv");
     std::cout << "directory contents:\n";
-    for (const auto& dir_item : dir_iter)
+    for (const auto& filename : filenames)
     {
-        std::cout << "\t" << dir_item << "\n";
+        std::cout << "\n" << filename << "\n";
     }
 
     const std::string filename = 
