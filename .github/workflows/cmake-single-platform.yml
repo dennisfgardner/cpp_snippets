@@ -21,9 +21,9 @@ jobs:
 
     steps:
     - name: update and upgrade packages
-      run: apt update && apt -y upgrade
+      run: sudo apt update && sudo apt -y upgrade
     - name: install packages
-      run: apt install -y g++ make cmake catch2 doxygen libopencv-dev
+      run: sudo apt install -y g++ make cmake catch2 doxygen libopencv-dev
     - uses: actions/checkout@v3
 
     - name: Configure CMake
