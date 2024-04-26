@@ -5,7 +5,7 @@
 Build an image with:
 
 ```bash
-export CXX_SNIPPETS_VERSION=0.0.4
+export CXX_SNIPPETS_VERSION=0.0.5
 docker build --build-arg CXX_SNIPPETS_VERSION=$CXX_SNIPPETS_VERSION -t cpp_snippets:$CXX_SNIPPETS_VERSION .
 ```
 
