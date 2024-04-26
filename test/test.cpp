@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include <filesystem>
+
 #include <catch2/catch.hpp>
 #include <opencv2/core.hpp>
 
@@ -42,6 +44,11 @@ TEST_CASE( "get directory filenames", "[utilities]" )
         "bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0000.csv",
         "bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0001.csv"
     };
+
+    // TEMP DEBUG
+    auto cur_path = std::filesystem::current_path();
+    std::cerr << "current path: " << cur_path << std::endl;
+
     REQUIRE(get_dir_filenames("../test/data", ".csv") == filelist);
     const std::vector<std::string> no_files{};
     REQUIRE(get_dir_filenames("../test/data", ".foo") == no_files);

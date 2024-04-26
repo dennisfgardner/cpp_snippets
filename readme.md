@@ -28,7 +28,7 @@ doxygen Doxyfile
 ```bash
 cmake -S . -B ./build
 cmake --build ./build
-ctest --test-dir ./build/
+ctest --output-on-failure --test-dir ./build/
 ./build/bin/main ./test/data/
 ```
 
