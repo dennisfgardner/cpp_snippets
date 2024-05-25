@@ -39,21 +39,25 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 # external software
 find_package( OpenCV REQUIRED )
 
-# utilities
+# utilities library
 add_library(utilities ./src/utilities.cpp)
 target_include_directories(utilities PRIVATE ./include)
 
+# InputDataHandler library
+add_library(InputDataHandler ./src/InputDataHandler.cpp)
+target_include_directories(InputDataHandler PRIVATE ./include ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(InputDataHandler utilities ${OpenCV_LIBS})
+
 # main
-add_executable(main ./src/main.cpp ./src/InputDataHandler.cpp)
+add_executable(main ./src/main.cpp)
 target_include_directories(main PRIVATE ./include ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(main utilities ${OpenCV_LIBS})
+target_link_libraries(main utilities InputDataHandler ${OpenCV_LIBS})
 
 # unit testing
 find_package(Catch2 REQUIRED)
-add_executable(unit_tests ./test/test.cpp ./src/main.cpp ./src/InputDataHandler.cpp)
-target_compile_definitions(unit_tests PRIVATE UNIT_TESTING)
+add_executable(unit_tests ./test/test_main.cpp ./test/test_utilities.cpp ./test/test_InputDataHandler.cpp)
 target_include_directories(unit_tests PRIVATE ./include ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(unit_tests Catch2::Catch2 utilities ${OpenCV_LIBS})
+target_link_libraries(unit_tests Catch2::Catch2 utilities InputDataHandler ${OpenCV_LIBS})
 include(CTest)
 include(Catch)
 catch_discover_tests(unit_tests)

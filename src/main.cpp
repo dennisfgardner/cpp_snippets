@@ -1,6 +1,3 @@
-#ifndef UNIT_TESTING
-// this main function interferes with the catch2 main
-
 #include <filesystem>
 #include <iostream>
 #include <string>
@@ -49,5 +46,3 @@ auto main(int argc, char** argv) -> int
     std::cout << "Program Finished.\n";
     return 0;
 }
-
-#endif //UNIT_TESTING
