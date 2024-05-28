@@ -71,17 +71,6 @@ private:
     std::set<std::string> filenames{};
     std::pair<int, int> rows_cols{0, 0};
     const int opencv_datatype{};
-    struct filename_info
-    {
-        std::string prefix{};
-        unsigned int scan_num{};
-        double x_pos{};
-        double y_pos{};
-        double exposure{};
-        unsigned int frame_num{};
-
-    };
-    std::vector<filename_info> scan_info{};
 };
 
 #endif // INPUT_DATA_HANDLER_CPP_SNIPPETS_HEADER

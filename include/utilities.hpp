@@ -56,6 +56,45 @@ auto get_dir_filenames(
 ) -> std::set<std::string>;
 
 
+/** @struct filenameInfo
+ *  @brief information about the scan obtained from filename
+ *  @var filenameInfo::prefix
+ *  Member 'prefix' contains a short description of the scan, e.g., data or bkg
+ *  @var filenameInfo::scan_num
+ *  Member 'scan_num' is the scan number, zero based index
+ *  @var filenameInfo::x_pos
+ *  Member 'x_pos' is the x-stage scan position
+ *  @var filenameInfo::y_pos
+ *  Member 'y_pos' is the y-stage scan position
+ *  @var filenameInfo::exposure
+ *  Member 'exposure' is the exposure time of the focal plane array
+ *  @var filenameInfo::frame_num
+ *  Member 'frame_num' is the frame number for a particular exposure, zero based indexing.
+ */
+struct filenameInfo
+{
+    std::string prefix{};
+    int scan_num{};
+    double x_pos{};
+    double y_pos{};
+    double exposure{};
+    int frame_num{};
+
+};
+
+
+/** @fn
+ * @brief parse filename
+ * 
+ * Extract scan data information from the filename.
+ * 
+ * @param dir_path filename
+ *
+ * @return filename information
+ */
+auto parse_filename(const std::string &filename) -> filenameInfo;
+
+
 /** @fn
  * @brief Get CSV number of rows and cols
  * 

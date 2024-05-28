@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <fstream>
 #include <sstream>
+#include <regex>
 
 #include "utilities.hpp"
 
@@ -58,6 +59,34 @@ auto get_dir_filenames(
         }
     }
     return filenames;
+}
+
+auto parse_filename(const std::string &filename) -> filenameInfo
+{
+    // parts of the filename
+    const std::string any_letters = "([^\\d+]+)";
+    const std::string any_nums = "([\\d+]+)";
+    const std::string reg_exp = 
+        any_letters // prefix text
+        + any_nums // scan number
+        + "(_x_)" + any_nums // x stage position
+        + "(_y_)" + any_nums // y stage postion
+        + "(_ExpTime_us_)" + any_nums // camera exposure time
+        + "(_FrameNum_)" + any_nums // frame number
+        + "(.*)";  // anything else
+    // match parts of the filename using regular expression
+    std::regex rgx(reg_exp);
+    std::smatch match;
+    std::regex_match(filename, match, rgx);
+    // put info into struc
+    filenameInfo filename_info;
+    filename_info.prefix = match[1];
+    filename_info.scan_num = std::stoi(match[2]);
+    filename_info.x_pos = std::stod(match[4]);
+    filename_info.y_pos = std::stod(match[6]);
+    filename_info.exposure = std::stod(match[8]);
+    filename_info.frame_num = std::stoi(match[10]);
+    return filename_info;
 }
 
 
