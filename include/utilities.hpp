@@ -80,6 +80,19 @@ struct filenameInfo
     double exposure{};
     int frame_num{};
 
+    bool operator==(const filenameInfo& rhs) const
+    {
+        return (frame_num == rhs.frame_num)
+        && (exposure == rhs.exposure)
+        && (x_pos == rhs.x_pos)
+        && (y_pos == rhs.y_pos)
+        && (scan_num == rhs.scan_num)
+        && (prefix == rhs.prefix);
+    }
+    bool operator!=(const filenameInfo& rhs) const
+    {
+        return !operator==(rhs);
+    }
 };
 
 

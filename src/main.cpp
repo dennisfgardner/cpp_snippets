@@ -28,11 +28,6 @@ auto main(int argc, char** argv) -> int
 
     // get all filenames
     std::set<std::string> filenames = get_dir_filenames(input_data_dir, ".csv");
-    std::cout << "filenames:\n";
-    for (const auto& filename : filenames)
-    {
-        std::cout << "\t" << filename << "\n";
-    }
 
     // parse the filenames
     for (const auto& filename : filenames)

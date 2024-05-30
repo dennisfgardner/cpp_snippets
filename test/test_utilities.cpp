@@ -53,22 +53,17 @@ TEST_CASE("parse filenames", "[utilities]" )
         "bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0000.csv",
         "bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0001.csv"
     };
-    filenameInfo filename_info_truth;
-    filename_info_truth.prefix = "bkg";
-    filename_info_truth.scan_num = 0;
-    filename_info_truth.x_pos = 17800;
-    filename_info_truth.y_pos = 14600;
-    filename_info_truth.exposure = 100;
-    filename_info_truth.frame_num = 0;
-    filenameInfo filename_info_test = parse_filename(filelist[0]);
-    REQUIRE(filename_info_truth.prefix == filename_info_test.prefix);
-    REQUIRE(filename_info_truth.scan_num == filename_info_test.scan_num);
-    REQUIRE(filename_info_truth.x_pos == filename_info_test.x_pos);
-    REQUIRE(filename_info_truth.y_pos == filename_info_test.y_pos);
-    REQUIRE(filename_info_truth.exposure == filename_info_test.exposure);
-    REQUIRE(filename_info_truth.frame_num == filename_info_test.frame_num);
-    filename_info_test = parse_filename(filelist[1]);
-    REQUIRE(1 == filename_info_test.frame_num);
+    filenameInfo filename_info;
+    filename_info.prefix = "bkg";
+    filename_info.scan_num = 0;
+    filename_info.x_pos = 17800;
+    filename_info.y_pos = 14600;
+    filename_info.exposure = 100;
+    filename_info.frame_num = 0;
+    REQUIRE(filename_info == parse_filename(filelist[0]));
+    filename_info.frame_num = 1;
+    REQUIRE(filename_info == parse_filename(filelist[1]));
+
 }
 
 TEST_CASE("get csv rows and cols", "[utilities]" )
