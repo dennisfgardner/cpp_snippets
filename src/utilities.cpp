@@ -4,7 +4,10 @@
 #include <sstream>
 #include <regex>
 
+#include <opencv2/opencv.hpp>
+
 #include "utilities.hpp"
+
 
 auto argc_checker(
     const int argc,
@@ -116,4 +119,34 @@ auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<int, int>
         retval.second = cols;
     }
     return retval;
+}
+
+
+auto read_csv_img_data(const std::string &csv_file, int rows, int cols) -> cv::Mat
+{
+    cv::Mat img(rows, cols, CV_64FC1);
+
+    std::ifstream input(csv_file, std::ifstream::in);
+    if (!input)
+    {
+        std::cerr << "ERROR: Cannot read csv file to get image data " << csv_file << "\n";
+    } else {
+        int row_cnt{0};
+        std::string line_content{};
+        while (input >> line_content)
+        {
+            int col_cnt{0};
+            std::stringstream line(line_content);
+            std::string col_content{};
+            while (std::getline(line, col_content, ','))
+            {
+                img.at<double>(row_cnt, col_cnt) = std::stod(col_content);
+                ++col_cnt;
+            }
+            ++row_cnt;
+        }
+
+    }
+    return img;
+
 }

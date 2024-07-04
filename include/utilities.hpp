@@ -5,6 +5,8 @@
 #include <utility>
 #include <set>
 
+#include <opencv2/opencv.hpp>
+
 
 /** @fn
  * @brief check number of input arguments
@@ -113,11 +115,25 @@ auto parse_filename(const std::string &filename) -> filenameInfo;
  * 
  * Get comma separated values (csv) file's number of rows and columns.
  * 
- * @param dir_path directory path
+ * @param csv_file csv filepath path
  * @param ext file extension with the preceding period
  *
  * @return filenames in the directory with specified directory
  */
 auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<int, int>;
+
+
+/** @fn
+ * @brief Read the csv image data
+ * 
+ * Read the image data from a csv file.
+ * 
+ * @param csv_file csv filepath path
+ * @param rows number of rows of data
+ * @param cols number of cols of data
+ *
+ * @return image data
+ */
+auto read_csv_img_data(const std::string &csv_file, int rows, int cols) -> cv::Mat;
 
 #endif

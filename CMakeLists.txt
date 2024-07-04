@@ -41,7 +41,9 @@ find_package( OpenCV REQUIRED )
 
 # utilities library
 add_library(utilities ./src/utilities.cpp)
-target_include_directories(utilities PRIVATE ./include)
+target_include_directories(utilities PRIVATE ./include ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(utilities ${OpenCV_LIBS})
+
 
 # InputDataHandler library
 add_library(InputDataHandler ./src/InputDataHandler.cpp)
