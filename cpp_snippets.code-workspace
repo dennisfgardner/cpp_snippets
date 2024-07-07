@@ -7,7 +7,8 @@
 	"settings": {
 		"cSpell.words": [
 			"opencv",
-			"valgrind"
+			"valgrind",
+			"ydata"
 		],
 		"files.associations": {
 			"iostream": "cpp",

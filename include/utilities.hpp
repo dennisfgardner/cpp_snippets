@@ -136,4 +136,15 @@ auto get_csv_rows_and_cols(const std::string &csv_file) -> std::pair<int, int>;
  */
 auto read_csv_img_data(const std::string &csv_file, int rows, int cols) -> cv::Mat;
 
+
+/** @fn
+ * @brief Write (x, y) data
+ * 
+ * Write two columns separated by whitespace.
+ * 
+ * @param xdata x data
+ * @param ydata y data
+ *
+ */
+auto write_xy_data(std::vector<double> &xdata, std::vector<double> &ydata) -> void;
 #endif

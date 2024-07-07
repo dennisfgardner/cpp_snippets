@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <regex>
+#include <stdexcept>
 
 #include <opencv2/opencv.hpp>
 
@@ -149,4 +150,18 @@ auto read_csv_img_data(const std::string &csv_file, int rows, int cols) -> cv::M
     }
     return img;
 
+}
+
+auto write_xy_data(std::vector<double> &xdata, std::vector<double> &ydata) -> void
+{
+    if (xdata.size() != ydata.size())
+    {
+        throw std::runtime_error("x and y data must be the same size");
+    }
+    std::ofstream fout{"./xy_data.dat", std::ios::out};
+    for (size_t ii=0; ii<xdata.size(); ++ii)
+    {
+        fout << xdata[ii] << " " << ydata[ii] << "\n";
+    }
+    
 }

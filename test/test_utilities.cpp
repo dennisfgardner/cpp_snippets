@@ -1,6 +1,7 @@
 #include <string>
 #include <set>
 #include <utility>
+#include <fstream>
 
 #include <catch2/catch.hpp>
 
@@ -77,4 +78,23 @@ TEST_CASE("get csv rows and cols", "[utilities]" )
     REQUIRE(get_csv_rows_and_cols(csv_file) == rows_cols) ;
     REQUIRE(get_csv_rows_and_cols("../test/data/bkg000_x_017800_y_014600_ExpTime_us_000100_FrameNum_0001.csv") == rows_cols) ;
 
+}
+
+
+TEST_CASE("write xy data", "[utilities]" )
+{
+    std::vector<double> xdata{0, 1, 2, 3, 4};
+    std::vector<double> ydata_short{0, 1, 2, 3};
+    REQUIRE_THROWS_AS(write_xy_data(xdata, ydata_short), std::runtime_error);
+    std::vector<double> ydata{4, 3, 2, 1, 0};
+    write_xy_data(xdata, ydata);
+    std::ifstream file_input("xy_data.dat", std::ios::in);
+    for (size_t ii=0; ii<xdata.size(); ++ii)
+    {
+        std::string truth = std::to_string(static_cast<int>(xdata[ii])) + " " 
+            +  std::to_string(static_cast<int>(ydata[ii]));
+        std::string line;
+        std::getline(file_input, line);
+        REQUIRE(line == truth);
+    }
 }

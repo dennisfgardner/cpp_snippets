@@ -53,17 +53,23 @@ auto main(int argc, char** argv) -> int
     cv::minMaxLoc(img, &minV, &maxV);
     std::cout << "min " << minV << " max " << maxV << "\n";
 
-    // stats about the filename
+    // stats about the filename and x y scan positions
     std::set<int> unique_scan_nums;
     std::set<double> unique_x_pos;
     std::set<double> unique_y_pos;
     std::set<double> unique_expos;
     std::set<int> unique_frame_nums;
+    std::vector<double> xpos;
+    xpos.reserve(filenames.size());
+    std::vector<double> ypos;
+    ypos.reserve(filenames.size());
     for (const auto& file_info: file_infos)
     {
         unique_scan_nums.insert(file_info.scan_num);
         unique_x_pos.insert(file_info.x_pos);
+        xpos.push_back(file_info.x_pos);
         unique_y_pos.insert(file_info.y_pos);
+        ypos.push_back(file_info.y_pos);
         unique_expos.insert(file_info.exposure);
         unique_frame_nums.insert(file_info.frame_num);
   
@@ -72,6 +78,7 @@ auto main(int argc, char** argv) -> int
     std::cout << "Number of unique x & y positions: (" << unique_x_pos.size() << ", " << unique_y_pos.size() << ")\n";
     std::cout << "Number of unique exposures: " << unique_expos.size() << "\n";
     std::cout << "Number of unique frame numbers: " << unique_frame_nums.size() << "\n";
+    write_xy_data(xpos, ypos);
 
 
     InputDataHandler input_data_handler(input_data_dir);
